@@ -10,9 +10,9 @@ import (
 	"strings"
 
 	"github.com/schachmat/ingo"
-	_ "github.com/schachmat/wego/backends"
-	_ "github.com/schachmat/wego/frontends"
-	"github.com/schachmat/wego/iface"
+	_ "github.com/smaeul/wego/backends"
+	_ "github.com/smaeul/wego/frontends"
+	"github.com/smaeul/wego/iface"
 )
 
 func pluginLists() {
