@@ -328,7 +328,6 @@ func (c *aatConfig) printDay(day iface.Day) (ret []string) {
 		8 * time.Hour,
 		12 * time.Hour,
 		19 * time.Hour,
-		23 * time.Hour,
 	}
 	ret = make([]string, 5)
 	for i := range ret {
@@ -355,13 +354,13 @@ func (c *aatConfig) printDay(day iface.Day) (ret []string) {
 
 	dateFmt := "┤ " + day.Date.Format("Mon 02. Jan") + " ├"
 	ret = append([]string{
-		"                                                       ┌─────────────┐                                                       ",
-		"┌──────────────────────────────┬───────────────────────" + dateFmt + "───────────────────────┬──────────────────────────────┐",
-		"│           Morning            │             Noon      └──────┬──────┘    Evening            │            Night             │",
-		"├──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤"},
+		" ┌─────────────┐",
+		"┌" + dateFmt + "───────────────┬──────────────────────────────┬──────────────────────────────┐",
+		"│└─────────────┘    Morning    │             Noon             │           Evening            │",
+		"├──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤"},
 		ret...)
 	return append(ret,
-		"└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘")
+		"└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘")
 }
 
 func (c *aatConfig) Setup() {
@@ -372,7 +371,6 @@ func (c *aatConfig) Setup() {
 func (c *aatConfig) Render(r iface.Data, unitSystem iface.UnitSystem) {
 	c.unit = unitSystem
 
-	fmt.Printf("Weather for %s%s\n\n", r.Location, c.formatGeo(r.GeoLoc))
 	stdout := colorable.NewColorableStdout()
 	if c.monochrome {
 		stdout = colorable.NewNonColorable(os.Stdout)
@@ -380,6 +378,7 @@ func (c *aatConfig) Render(r iface.Data, unitSystem iface.UnitSystem) {
 
 	out := c.formatCond(make([]string, 5), r.Current, true)
 	for _, val := range out {
+		fmt.Fprint(stdout, "                                ")
 		fmt.Fprintln(stdout, val)
 	}
 
