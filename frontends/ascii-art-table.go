@@ -89,7 +89,7 @@ func (c *aatConfig) formatWind(cond iface.Cond) string {
 			return "?"
 		}
 		arrows := []string{"↓", "↙", "←", "↖", "↑", "↗", "→", "↘"}
-		return "\033[1m" + arrows[((*deg+22)%360)/45] + "\033[0m"
+		return arrows[((*deg+22)%360)/45]
 	}
 	color := func(spdKmph float32) string {
 		colmap := []struct {
